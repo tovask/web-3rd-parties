@@ -5,14 +5,23 @@ python:
   - "3.6"
 git:
   depth: 3
-#before_install:
-#  - sudo apt-get update
+before_install:
+  - sudo apt-get update
 # command to install dependencies
-#install:
-#  - pip install -r requirements.txt
+# Travis CI Uses Isolated virtualenvs, so if you need to install Python packages, do it via pip and not apt
+install:
+  - git clone git@github.com:mozilla/OpenWPM.git --depth=1
+  - cd OpenWPM
+  - ./install.sh --no-flash
+#  - pip3 install --upgrade pip
+#  - pip install -r requirements.txt # the --user option is mandatory if you are not using language: python
 # command to run tests
 #before_script:
 #  - flake8
 script:
-  - echo hello
+  - env
+  - pwd
+  - python ./OpenWPM/demo.py
   #- pytest
+  #- cd test
+  #- py.test -s -v --durations=10 $TESTS
