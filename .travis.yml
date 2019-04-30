@@ -27,7 +27,7 @@ script:
   - cp OpenWPM/demo.py demo.py
   - sed -i -e "/disable_flash/d" demo.py # we don't have flash
   - sed -i -e "s/http_instrument/headless/" demo.py # need to run headless
-  #- sed -i -e "s/NUM_BROWSERS = 3/NUM_BROWSERS = 1/" demo.py
+  - sed -i -e "s/from automation import/from OpenWPM.automation import/" demo.py
   - python demo.py
   #- pytest
   #- cd test
