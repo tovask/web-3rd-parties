@@ -10,7 +10,7 @@ before_install:
 # command to install dependencies
 # Travis CI Uses Isolated virtualenvs, so if you need to install Python packages, do it via pip and not apt
 install:
-  - git clone git@github.com:mozilla/OpenWPM.git --depth=1
+  - git clone https://github.com/mozilla/OpenWPM.git --depth=1
   - cd OpenWPM
   - ./install.sh --no-flash
 #  - pip3 install --upgrade pip
