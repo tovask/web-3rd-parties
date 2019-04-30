@@ -18,12 +18,11 @@ install:
   - pip install --upgrade -r requirements.txt
   - ./install.sh --no-flash
   - cd ..
-  - ls -la /usr/lib
-  - ls -la /usr/lib/python*
   - sudo mv OpenWPM /usr/lib/
+  - ls -ld /usr/lib/OpenWPM
+  - ls -la /usr/lib/OpenWPM
   - for python_path in /usr/lib/python*; do sudo ln -s /usr/lib/OpenWPM ${python_path}/OpenWPM; done
-  - for python_path in /usr/lib/python*; do ls -ld ${python_path}; done
-  - for python_path in /usr/lib/python*; do ls -l ${python_path}; done
+  - ls -la /usr/lib/python2.7/OpenWPM
 # command to run tests
 #before_script:
 #  - flake8
