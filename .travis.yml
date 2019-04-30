@@ -29,6 +29,8 @@ install:
 script:
   - env
   - pwd
+  - whoami
+  - python -c "import sys; print sys.path"
   - cp /usr/lib/OpenWPM/demo.py demo.py
   - sed -i -e "/disable_flash/d" demo.py # we don't have flash
   - sed -i -e "s/http_instrument/headless/" demo.py # need to run headless
