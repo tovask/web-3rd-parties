@@ -13,6 +13,7 @@ install:
   - git clone https://github.com/mozilla/OpenWPM.git --depth=1
   - cd OpenWPM
   - ./install.sh --no-flash
+  - cd ..
 #  - pip3 install --upgrade pip
 #  - pip install -r requirements.txt # the --user option is mandatory if you are not using language: python
 # command to run tests
