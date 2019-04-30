@@ -13,16 +13,25 @@ before_install:
 install:
   #- pip3 install --upgrade pip
   #- pip install -r requirements.txt # the --user option is mandatory if you are not using language: python
+  - pwd
+  - ls -la
+  - $orig_pwd = `pwd`
+  - cd `mktemp -d`
+  # 
   - git clone https://github.com/mozilla/OpenWPM.git --depth=1
   - cd OpenWPM
   - pip install --upgrade -r requirements.txt
   - ./install.sh --no-flash
   - cd ..
-  - sudo mv OpenWPM /usr/lib/
-  - ls -ld /usr/lib/OpenWPM
-  - ls -la /usr/lib/OpenWPM
-  - for python_path in /usr/lib/python*; do sudo ln -s /usr/lib/OpenWPM ${python_path}/OpenWPM; done
-  - ls -la /usr/lib/python2.7/OpenWPM
+  # 
+  - cp $orig_pwd/openwpm_setup.py setup.py
+  - ls -la
+  - python -c "from setuptools import find_packages; print find_packages()"
+  - python -c "from setuptools import find_packages; print find_packages(exclude=['OpenWPM.test'])"
+  - pip install .
+  - pip show OpenWPM
+  # 
+  - cd $orig_pwd
 # command to run tests
 #before_script:
 #  - flake8
@@ -31,7 +40,8 @@ script:
   - pwd
   - whoami
   - python -c "import sys; print sys.path"
-  - cp /usr/lib/OpenWPM/demo.py demo.py
+  - python -c "from OpenWPM.automation import TaskManager; print TaskManager.load_default_params(1)"
+  - wget https://raw.githubusercontent.com/mozilla/OpenWPM/master/demo.py -O demo.py
   - sed -i -e "/disable_flash/d" demo.py # we don't have flash
   - sed -i -e "s/http_instrument/headless/" demo.py # need to run headless
   - sed -i -e "s/from automation import/from OpenWPM.automation import/" demo.py
