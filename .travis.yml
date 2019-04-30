@@ -15,7 +15,7 @@ install:
   #- pip install -r requirements.txt # the --user option is mandatory if you are not using language: python
   - pwd
   - ls -la
-  - $orig_pwd = `pwd`
+  - $orig_pwd=`pwd`
   - cd `mktemp -d`
   # 
   - git clone https://github.com/mozilla/OpenWPM.git --depth=1
