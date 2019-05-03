@@ -22,12 +22,13 @@ install:
   - cd OpenWPM
   - pip install --upgrade -r requirements.txt
   - ./install.sh --no-flash
+  - rm -rf automation/Extension/firefox/node_modules # not needed after the extension built
   - cd ..
   # 
   - cp $orig_pwd/openwpm_setup.py setup.py
   - ls -la
-  - python -c "from setuptools import find_packages; print find_packages()"
-  - python -c "from setuptools import find_packages; print find_packages(exclude=['OpenWPM.test'])"
+  - python -c "from setuptools import find_packages; print(find_packages())"
+  - python -c "from setuptools import find_packages; print(find_packages(exclude=['OpenWPM.test']))"
   - pip install .
   - pip show OpenWPM
   # 
@@ -40,7 +41,7 @@ script:
   - pwd
   - whoami
   - python -c "import sys; print sys.path"
-  - python -c "from OpenWPM.automation import TaskManager; print TaskManager.load_default_params(1)"
+  - python -c "from OpenWPM.automation import TaskManager; print(TaskManager.load_default_params(1))"
   - wget https://raw.githubusercontent.com/mozilla/OpenWPM/master/demo.py -O demo.py
   - sed -i -e "/disable_flash/d" demo.py # we don't have flash
   - sed -i -e "s/http_instrument/headless/" demo.py # need to run headless
