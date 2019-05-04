@@ -40,7 +40,7 @@ script:
   - env
   - pwd
   - whoami
-  - python -c "import sys; print sys.path"
+  - python -c "import sys; print(sys.path)"
   - python -c "from OpenWPM.automation import TaskManager; print(TaskManager.load_default_params(1))"
   - wget https://raw.githubusercontent.com/mozilla/OpenWPM/master/demo.py -O demo.py
   - sed -i -e "/disable_flash/d" demo.py # we don't have flash
