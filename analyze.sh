@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-#set -x
+set -x
 
 # https://extendsclass.com/sqlite-browser.html
 
