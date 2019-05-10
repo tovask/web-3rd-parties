@@ -19,7 +19,9 @@ install:
   - cd `mktemp -d`
   # 
   - git clone https://github.com/mozilla/OpenWPM.git --depth=1
+  #- git clone https://github.com/mozilla/OpenWPM.git
   - cd OpenWPM
+  #- git checkout a5c982049d1a1c4454e80acff1e82e871fb33fcb
   - pip install --upgrade -r requirements.txt
   - ./install.sh --no-flash
   - rm -rf automation/Extension/firefox/node_modules # not needed after the extension built
@@ -43,10 +45,16 @@ script:
   - python -c "import sys; print(sys.path)"
   - python -c "from OpenWPM.automation import TaskManager; print(TaskManager.load_default_params(1))"
   - wget https://raw.githubusercontent.com/mozilla/OpenWPM/master/demo.py -O demo.py
+  - sed -i -e "s/from automation import/from OpenWPM.automation import/" demo.py
   - sed -i -e "/disable_flash/d" demo.py # we don't have flash
   - sed -i -e "s/http_instrument/headless/" demo.py # need to run headless
-  - sed -i -e "s/from automation import/from OpenWPM.automation import/" demo.py
+  - sed -i -e "s/Desktop/openwpm_results/" demo.py # data_directory
+  - sed -i -e "s/Desktop/openwpm_results/" demo.py # log_directory
+  - sed -i -e "s/index='\*\*')/)/" demo.py 
   - python demo.py
+  #
+  - ./analyze.sh
+  #
   #- pytest
   #- cd test
   #- py.test -s -v --durations=10 $TESTS
