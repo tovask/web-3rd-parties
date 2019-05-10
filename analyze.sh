@@ -4,7 +4,8 @@ set -e
 
 # https://extendsclass.com/sqlite-browser.html
 
-db_file=$(ls -at ~ | grep openwpm_results | head -n 1)/crawl-data.sqlite
+db_file=$(find ~ -maxdepth 1 | grep openwpm_results | sort -r | head -n 1)/crawl-data.sqlite
+echo $db_file
 
 python << EOF
 import sqlite3
