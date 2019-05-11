@@ -42,15 +42,14 @@ script:
   - env
   - pwd
   - whoami
-  - python -c "import sys; print(sys.path)"
+  - python -c "import sys; print(sys.path)" # check the import locations
   - python -c "from OpenWPM.automation import TaskManager; print(TaskManager.load_default_params(1))"
   - wget https://raw.githubusercontent.com/mozilla/OpenWPM/master/demo.py -O demo.py
-  - sed -i -e "s/from automation import/from OpenWPM.automation import/" demo.py
-  - sed -i -e "/disable_flash/d" demo.py # we don't have flash
-  - sed -i -e "s/http_instrument/headless/" demo.py # need to run headless
-  - sed -i -e "s/Desktop/openwpm_results/" demo.py # data_directory
-  - sed -i -e "s/Desktop/openwpm_results/" demo.py # log_directory
-  - sed -i -e "s/index='\*\*')/)/" demo.py 
+  - sed -i -e 's/from automation import/from OpenWPM.automation import/' demo.py
+  - sed -i -e 's/\['\''disable_flash'\''\] = False/['\''headless'\''\] = True/' demo.py # we don't have flash, and need to run headless
+  - sed -i -e 's/Desktop/openwpm_results/' demo.py # data_directory
+  - sed -i -e 's/Desktop/openwpm_results/' demo.py # log_directory
+  - sed -i -e 's/index='\*\*')/)/' demo.py 
   - python demo.py
   #
   - ./analyze.sh
