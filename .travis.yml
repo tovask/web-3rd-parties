@@ -49,7 +49,7 @@ script:
   - sed -i -e 's/\['\''disable_flash'\''\] = False/['\''headless'\''\] = True/' demo.py # we don't have flash, and need to run headless
   - sed -i -e 's/Desktop/openwpm_results/' demo.py # data_directory
   - sed -i -e 's/Desktop/openwpm_results/' demo.py # log_directory
-  - sed -i -e 's/index='\*\*')/)/' demo.py 
+  - sed -i -e 's/index='\''\*\*'\'')/)/' demo.py 
   - python demo.py
   #
   - ./analyze.sh
