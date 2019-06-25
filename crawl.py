@@ -15,9 +15,10 @@ sites = [
 	#'http://www.princeton.edu',
 	#'http://citp.princeton.edu/',
 	#'https://index.hu/gazdasag/2019/05/01/nettolotto_17/'
+	'https://www.speedtest.net/'
 	]
 
-sites = map(lambda domain: 'http://'+domain, Tranco().list().top(10) )
+sites = map(lambda domain: 'http://'+domain, Tranco().list().top(100) )
 
 # Loads the manager preference and 3 copies of the default browser dictionaries
 manager_params, browser_params = TaskManager.load_default_params(NUM_BROWSERS)
@@ -29,6 +30,7 @@ for i in range(NUM_BROWSERS):
 	
 	# Record HTTP Requests and Responses
 	browser_params[i]['http_instrument'] = True
+#browser_params[1]['ublock-origin'] = True
 
 # Update TaskManager configuration (use this for crawl-wide settings)
 manager_params['data_directory'] = '~/openwpm_results/'
@@ -49,7 +51,7 @@ for site in sites:
 	#command_sequence.save_screenshot('screenshot')
 	
 	# index='**' synchronizes visits between the three browsers
-	manager.execute_command_sequence(command_sequence)#, index='*')
+	manager.execute_command_sequence(command_sequence) #, index='**')
 
 # Shuts down the browsers and waits for the data to finish logging
 manager.close()

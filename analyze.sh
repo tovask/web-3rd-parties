@@ -20,17 +20,15 @@ insert_cursor = conn.cursor()
 
 # Create an empty table
 insert_cursor.execute('DROP TABLE IF EXISTS third_party_analyze')
-insert_cursor.execute('CREATE TABLE IF NOT EXISTS third_party_analyze ( url TEXT, top_level_url TEXT, is_third_party INTEGER )')
+insert_cursor.execute('CREATE TABLE IF NOT EXISTS third_party_analyze (crawl_id INTEGER, url TEXT, top_level_url TEXT, is_third_party INTEGER)')
 #conn.commit()
 
 # all_rows = cursor.fetchall()
-for row in select_cursor.execute('SELECT url , top_level_url FROM http_requests;'):
-	#print row
-	#print(urlparse(row[0]).netloc,"\t",urlparse(row[1]).netloc)
-	is_third_party = ( urlparse(row[0]).hostname != urlparse(row[1]).hostname ) and ( urlparse(row[1]).hostname != None )
+for row in select_cursor.execute('SELECT crawl_id, url, top_level_url FROM http_requests;'):
+	is_third_party = ( urlparse(row[1]).hostname != urlparse(row[2]).hostname ) and ( urlparse(row[2]).hostname != None )
 	#print(is_third_party)
 	# Insert a row of data
-	insert_cursor.executemany('INSERT INTO third_party_analyze VALUES (?,?,?)', [( row[0], row[1], 1 if is_third_party else 0)])
+	insert_cursor.executemany('INSERT INTO third_party_analyze VALUES (?,?,?,?)', [( row[0], row[1], row[2], 1 if is_third_party else 0)])
 	#conn.commit()
 
 # Save (commit) the changes
