@@ -1,4 +1,6 @@
 #!/bin/bash
+set -x -e
+
 orig_pwd=`pwd`
 cd `mktemp -d`
 
