@@ -11,40 +11,19 @@ before_install:
 # command to install dependencies
 # Travis CI Uses Isolated virtualenvs, so if you need to install Python packages, do it via pip and not apt
 install:
-  #- pip3 install --upgrade pip
-  #- pip install -r requirements.txt # the --user option is mandatory if you are not using language: python
-  - pwd
   - ls -la
-  - orig_pwd=`pwd`
-  - cd `mktemp -d`
-  # 
-  - git clone https://github.com/mozilla/OpenWPM.git --depth=1
-  #- git clone https://github.com/mozilla/OpenWPM.git
-  - cd OpenWPM
-  #- git checkout a5c982049d1a1c4454e80acff1e82e871fb33fcb
-  - pip install --upgrade -r requirements.txt
-  - ./install.sh --no-flash
-  - rm -rf automation/Extension/firefox/node_modules # not needed after the extension built
-  - cd ..
-  # 
-  - cp $orig_pwd/openwpm_setup.py setup.py
-  - ls -la
-  - python -c "from setuptools import find_packages; print(find_packages())"
-  - python -c "from setuptools import find_packages; print(find_packages(exclude=['OpenWPM.test']))"
-  - pip install .
-  - pip show OpenWPM
-  # 
-  - cd $orig_pwd
   #
-  - pip install --upgrade -r requirements.txt
+  - ./install_openwpm.sh # install OpenWPM as a python module
+  #
+  - pip install --upgrade -r requirements.txt # install our python requirements
 # command to run tests
-#before_script:
-#  - flake8
+before_script:
+  - flake8
 script:
   - env
   - pwd
   - whoami
-  - python -c "import sys; print(sys.path)" # check the import locations
+  #
   - python -c "from OpenWPM.automation import TaskManager; print(TaskManager.load_default_params(1))"
   #
   - wget https://raw.githubusercontent.com/mozilla/OpenWPM/master/demo.py -O demo.py
@@ -58,7 +37,4 @@ script:
   - python crawl.py
   #
   - ./analyze.sh
-  #
-  #- pytest
-  #- cd test
-  #- py.test -s -v --durations=10 $TESTS
+ 
